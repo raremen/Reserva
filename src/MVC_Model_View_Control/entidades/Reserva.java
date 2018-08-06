@@ -42,9 +42,18 @@ public class Reserva {
 		return TimeUnit.DAYS.convert(lDiferenca, TimeUnit.MICROSECONDS);
 	}
 	
-	public void atualizaData(Date dEntrada, Date dSaida) {
+	public String atualizaData(Date dEntrada, Date dSaida) {
+		Date dAgora = new Date();
+		if (dEntrada.before(dAgora) || dSaida.before(dAgora)) {
+			return "Data incorreta, favor colocar datas futuras referente a data de hoje.";
+		}
+		if(!dSaida.after(dEntrada)) {
+		return "Favor informar a data correta, onde entrada e saida batem com "
+				+ "os dias reais pois o cliente não é um jumper temporal.";
+		}
 		this.dEntrada = dEntrada;
 		this.dSaida   = dSaida;
+		return null;
 	}
 	
 	@Override
